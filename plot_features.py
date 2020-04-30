@@ -1,13 +1,10 @@
-import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 sns.set()
 sns.set(color_codes=True)
 
-def feature_plot(feature):
-	x = np.random.normal(size=100)
-	sns.distplot(x)
+def feature_plot(x):
+	ax = sns.distplot(x, kde=False, rug=False)
 	plt.show()
+	# plt.savefig("mygraph.png")
 	return
-
-feature_plot(1)
