@@ -31,7 +31,7 @@ print("\033[34;1m Getting features of unpacked binaries... \033[39;0m")
 unpacked_features_list = get_features("dataset/binaries")
 print("\033[34;1m Getting features of packed binaries... \033[39;0m")
 packed_features_list = get_features("dataset/packed")
-feature_list = unpacked_features_list + packed_features_list
+features_list = unpacked_features_list + packed_features_list
 
 print("\033[34;1m Generating DataSet... \033[39;0m")
 df = pd.DataFrame.from_records(features_list)
