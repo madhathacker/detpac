@@ -33,8 +33,8 @@ def e_features(filename): #Extract the features from the given filename. Uses pe
 		features['SizeOfUninitializedData'] = pe.OPTIONAL_HEADER.SizeOfUninitializedData
 		features['AddressOfEntryPoint'] = pe.OPTIONAL_HEADER.AddressOfEntryPoint
 		features['BaseOfCode'] = pe.OPTIONAL_HEADER.BaseOfCode
-		if hasattr(pe.OPTIONAL_HEADER, 'BaseOfData'): # not sure about this one
-		    features['BaseOfData'] = pe.OPTIONAL_HEADER.BaseOfData
+		#if hasattr(pe.OPTIONAL_HEADER, 'BaseOfData'): # not sure about this one
+		#    features['BaseOfData'] = pe.OPTIONAL_HEADER.BaseOfData
 		features['ImageBase'] = pe.OPTIONAL_HEADER.ImageBase
 		features['SectionAlignment'] = pe.OPTIONAL_HEADER.SectionAlignment
 		features['FileAlignment'] = pe.OPTIONAL_HEADER.FileAlignment
@@ -59,10 +59,16 @@ def e_features(filename): #Extract the features from the given filename. Uses pe
 
 		# PE Sections
 		for section in pe.sections:
-			features[section.Name.decode('ascii')+'Size'] = section.SizeOfRawData
-			features[section.Name.decode('ascii')+'Entropy'] = section.get_entropy()
-			features[section.Name.decode('ascii')+'Characteristics'] = section.Characteristics # May be used to calculate flags
+			if(section.Name == b'.text\x00\x00\x00' or section.Name == b'.data\x00\x00\x00' or section.Name == b'.rdata\x00\x00'):
+				features[section.Name.decode('ascii')+'Size'] = section.SizeOfRawData
+				features[section.Name.decode('ascii')+'Entropy'] = section.get_entropy()
+				features[section.Name.decode('ascii')+'Characteristics'] = section.Characteristics # May be used to calculate flags
 		# Flags ?
+
+		if "packed" in os.path.basename(filename):
+			features["Packed"] = 1
+		else:
+			features["Packed"] = 0
 
 	except Exception as e:
 		print("Error processing %s - %s" % (filename, str(e)))

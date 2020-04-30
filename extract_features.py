@@ -20,11 +20,8 @@ def get_features(file_directory):
 			#print(filename)
 			#print(e_features(filename))
 			file_features = e_features(filename)
-			if "packed" in filename:
-				file_features["Packed"] = 1
-			else:
-				file_features["Packed"] = 0
-			features_list.append(file_features)
+			if bool(test_dict): #check for empty dictionaries (could not extract all features of file)
+				features_list.append(file_features)
 	return features_list
 
 print("\033[34;1m Getting features of unpacked binaries... \033[39;0m")
@@ -40,4 +37,4 @@ print(df)
 print("\033[34;1m Saving Dataset to File... \033[39;0m")
 df.to_csv('dataset.csv', sep=',', encoding='utf-8')
 
-plot_features(['Size', 'TimeDateStamp'])
+plot_features(['Size'])

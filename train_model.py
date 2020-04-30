@@ -6,12 +6,12 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix
 from sklearn import tree
 
-Dataset = pd.read_csv('Dataset.csv', sep=',')
-Data = Dataset.drop(['Name', 'Packed'], axis=1).values
+Dataset = pd.read_csv('dataset.csv', sep=',')
+Data = Dataset.drop(['Filename', 'Packed'], axis=1).values
 
 Packed = Dataset['Packed'].values
 
-FeatSelect = ske.ensemble.ExtraTreesClassifier().fit(Data, Packed)
+FeatSelect = ske.ensemble.ExtraTreesClassifier().fit(Data, Packed) #fit data to Tree Classifier Model?
 Model = SelectFromModel(FeatSelect, prefit=True)
 Data_new = Model.transform(Data)
 
