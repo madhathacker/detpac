@@ -1,3 +1,4 @@
+import glob
 import pandas as pd
 import sklearn as ske
 from sklearn.feature_selection import SelectFromModel
@@ -6,7 +7,14 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix
 from sklearn import tree
 
-Dataset = pd.read_csv('dataset.csv', sep=',')
+data_directory = 'dataset'
+all_files = glob.glob(data_directory + "/*.csv")
+li = []
+for filename in all_files:
+    df = pd.read_csv(filename, sep=',')
+    li.append(df)
+
+Dataset = pd.concat(li, axis=0, ignore_index=True)
 Data = Dataset.drop(['Filename', 'Packed'], axis=1).values
 
 Packed = Dataset['Packed'].values
@@ -24,7 +32,7 @@ for Classif in Classifiers:
 	clf.fit(Unpacked_Train,Packed_Train)
 
 	score = clf.score(Unpacked_Test, Packed_Test)
-	print("\033[34;1m The score of %s : %f %% \033[39;0m" % (Classif, score*100))
+	print("The score of\033[93;1m %s \033[39;m:\033[36;1m %f %% \033[39;0m" % (Classif, score*100))
 	
 	Result = clf.predict(Unpacked_Test)
 	CM = confusion_matrix(Packed_Test, Result)
