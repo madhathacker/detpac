@@ -1,0 +1,17 @@
+	Dataset
+NonPacked PE Files:	4417
+Portable Executables:	3979
+Amber Packed Files:	3925
+UPX Packed Files:	3459
+Petite Packed Files:	2100
+
+	Considerations
+Some PEs may have already been packed / malware.
+No deticated malware files packed.
+Not many packers used.
+
+Packers could not pack every file.
+Not all PE sections in all PEs/Packed Files.
+
+UPX creates specially named sections (we manually treated them as .text/.data)
+
