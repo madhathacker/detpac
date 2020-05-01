@@ -67,11 +67,11 @@ def e_features(filename): #Extract the features from the given filename. Uses pe
 				features['.dataSize'] = section.SizeOfRawData
 				features['.dataEntropy'] = section.get_entropy()
 				features['.dataCharacteristics'] = section.Characteristics
-			elif(section.Name == b'UPX0\x00\x00'):
+			elif(section.Name == b'UPX0\x00\x00\x00\x00'):
 				features['.textSize'] = section.SizeOfRawData
 				features['.textEntropy'] = section.get_entropy()
 				features['.textCharacteristics'] = section.Characteristics
-			elif(section.Name == b'UPX1\x00\x00\x00'):
+			elif(section.Name == b'UPX1\x00\x00\x00\x00'):
 				features['.dataSize'] = section.SizeOfRawData
 				features['.dataEntropy'] = section.get_entropy()
 				features['.dataCharacteristics'] = section.Characteristics
