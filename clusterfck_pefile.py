@@ -58,11 +58,26 @@ def e_features(filename): #Extract the features from the given filename. Uses pe
 		# DLL Characteristics ?
 
 		# PE Sections
-		#for section in pe.sections:
-		#	if(section.Name == b'.text\x00\x00\x00' or section.Name == b'.data\x00\x00\x00' or section.Name == b'.rdata\x00\x00'):
-		#		features[section.Name.decode('ascii')+'Size'] = section.SizeOfRawData
-		#		features[section.Name.decode('ascii')+'Entropy'] = section.get_entropy()
-		#		features[section.Name.decode('ascii')+'Characteristics'] = section.Characteristics # May be used to calculate flags
+		for section in pe.sections:
+			if(section.Name == b'.text\x00\x00\x00'):
+				features['.textSize'] = section.SizeOfRawData
+				features['.textEntropy'] = section.get_entropy()
+				features['.textCharacteristics'] = section.Characteristics
+			elif(section.Name == b'.data\x00\x00\x00'):
+				features['.dataSize'] = section.SizeOfRawData
+				features['.dataEntropy'] = section.get_entropy()
+				features['.dataCharacteristics'] = section.Characteristics
+			elif(section.Name == b'UPX0\x00\x00'):
+				features['.textSize'] = section.SizeOfRawData
+				features['.textEntropy'] = section.get_entropy()
+				features['.textCharacteristics'] = section.Characteristics
+			elif(section.Name == b'UPX1\x00\x00\x00'):
+				features['.dataSize'] = section.SizeOfRawData
+				features['.dataEntropy'] = section.get_entropy()
+				features['.dataCharacteristics'] = section.Characteristics
+			else:
+				continue
+
 		# Flags ?
 
 	except Exception as e:

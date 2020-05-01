@@ -37,7 +37,7 @@ def save_features(directory, output):
 	print('\033[34;1m Saving Dataset to: '+output+'... \033[39;0m')
 	df.to_csv(output, sep=',', encoding='utf-8')
 	#plot_features(['Size'])
-	print('\033[32;1m DONE \033[39;0m')
+	print('\033[32;1m DONE\n \033[39;0m')
 
 def yes_or_no(question):
     while "the answer is invalid":

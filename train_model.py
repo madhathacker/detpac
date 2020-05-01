@@ -11,11 +11,14 @@ data_directory = 'dataset'
 all_files = glob.glob(data_directory + "/*.csv")
 li = []
 for filename in all_files:
-    df = pd.read_csv(filename, sep=',')
-    li.append(df)
+	df = pd.read_csv(filename, sep=',', index_col=0)
+	#print(df)
+	li.append(df)
 
 Dataset = pd.concat(li, axis=0, ignore_index=True)
-Data = Dataset.drop(['Filename', 'Packed'], axis=1).values
+#print(Dataset)
+Data = Dataset.drop(['Filename', 'Packed'], axis=1).to_numpy(dtype=int)
+#print(Data)
 
 Packed = Dataset['Packed'].values
 
